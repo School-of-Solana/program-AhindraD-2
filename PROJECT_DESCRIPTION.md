@@ -2,9 +2,9 @@
 
 # Project Description
 
-**Deployed Frontend URL:** [https://prism-papers-dapp.vercel.app/](https://prism-papers-dapp.vercel.app/)
+- ## Deployed Frontend URL: [https://prism-papers-dapp.vercel.app/](https://prism-papers-dapp.vercel.app/)
 
-**Solana Program ID:** `2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv`
+- ## Solana Program ID: [2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv](https://solscan.io/account/2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv?cluster=devnet)
 
 ## Project Overview
 
@@ -77,31 +77,49 @@ Below are the primary data structures used in the program:
 
 ```rust
 pub struct User {
-    pub owner: Pubkey,        // The wallet that owns this profile
-    #[max_len(50)]
-    pub name: String,         // Display name
-    pub published: u32,       // Count of papers published
-    pub purchased: u32,       // Count of papers bought
-    pub reviewed: u32,        // Count of reviews submitted
-    pub earning: u64,         // Accounting ledger for withdrawable funds
+    pub owner: Pubkey,
+    #[max_len(USER_NAME_MAX_LENGTH)]
+    pub name: String,
+    pub published: u16,
+    pub purchased: u16,
+    pub sold: u16,
+    pub reviewed: u16,
+    pub earning: u64,
     pub timestamp: i64,
     pub bump: u8,
 }
 
 pub struct ResearchPaper {
     pub author: Pubkey,
-    pub uuid: u32,            // Unique ID for derivation (optional usage)
-    #[max_len(100)]
+    #[max_len(PAPER_TITLE_MAX_LENGTH)]
     pub title: String,
-    #[max_len(400)]
+    #[max_len(PAPER_DESCRIPTION_MAX_LENGTH)]
     pub description: String,
-    pub price: u64,           // Price in Lamports
+    pub price: u64,
     pub sales: u32,
     pub reviews: u32,
-    #[max_len(200)]
-    pub encrypted_url: String,// Arweave Hash of encrypted PDF
-    #[max_len(300)]
-    pub encryption_key: String,// Lit Protocol Key
+    #[max_len(PAPER_URL_MAX_LENGTH)]
+    pub encrypted_url: String,
+    #[max_len(ENCRYPTION_KEY_MAX_LENGTH)]
+    pub encryption_key: String,
+    pub timestamp: i64,
+    pub bump: u8,
+}
+
+pub struct AccessReceipt {
+    pub buyer: Pubkey,
+    pub purchased_paper: Pubkey,
+    pub timestamp: i64,
+    pub bump: u8,
+}
+
+pub struct PeerReview {
+    pub reviewer: Pubkey,
+    pub reviewed_paper: Pubkey,
+    #[max_len(REVIEW_URL_MAX_LENGTH)]
+    pub review_url: String,
+    pub status: ReviewStatus,
+    pub proposed_reward: u64,
     pub timestamp: i64,
     pub bump: u8,
 }

@@ -1,11 +1,12 @@
 use anchor_lang::prelude::*;
+use crate::constants::REVIEW_URL_MAX_LENGTH;
 
 #[account]
 #[derive(InitSpace)]
 pub struct PeerReview {
     pub reviewer: Pubkey,
     pub reviewed_paper: Pubkey,
-    #[max_len(200)]
+    #[max_len(REVIEW_URL_MAX_LENGTH)]
     pub review_url: String,
     pub status: ReviewStatus,
     pub proposed_reward: u64,
