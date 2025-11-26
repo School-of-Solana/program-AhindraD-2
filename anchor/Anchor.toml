@@ -1,0 +1,20 @@
+[toolchain]
+package_manager = "yarn"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+prismpapersdapp = "2nvhRn83KBxkkAfLH64meTq8cYB5aRLnZVbsxZdgfPTv"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/menageri3.json"
+
+[scripts]
+test = "vitest"
+# test = "pnpm run vitest"
